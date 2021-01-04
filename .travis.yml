@@ -1,0 +1,22 @@
+sudo: required
+services:
+  - docker
+
+before_install:
+  - docker build -t japumba/react-test -f ./client/Dockerfile.dev ./client
+
+script:
+  - docker run -e CI=true japumba/react-test npm test
+
+after_success:
+  - docker build -t japumba/multi-client ./client
+  - docker build -t japumba/multi-nginx ./nginx
+  - docker build -t japumba/multi-server ./server
+  - docker build -t japumba/multi-worker ./worker
+  # Docker CLI login
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+  # Push images to dockerhub
+  - docker push japumba/multi-client
+  - docker push japumba/multi-nginx
+  - docker push japumba/multi-server
+  - docker push japumba/multi-worker

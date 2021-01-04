@@ -1,0 +1,23 @@
+{
+  "name": "worker",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "bluebird": "^3.7.2",
+    "config": "^3.3.3",
+    "nodemon": "^2.0.6",
+    "redis": "^3.0.2"
+  },
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "mocha": "^8.2.1"
+  },
+  "scripts": {
+    "test": "mocha",
+    "start": "NODE_ENV=production node index.js",
+    "dev": "NODE_ENV=local nodemon"
+  },
+  "author": "",
+  "license": "ISC"
+}

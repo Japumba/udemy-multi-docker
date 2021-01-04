@@ -1,0 +1,79 @@
+services:
+
+  nginx:
+    restart: always
+    ports:
+      - "3050:80"
+    build:
+      context: ./nginx
+      dockerfile: Dockerfile.dev
+    depends_on:
+      - client
+      - fibonacci-server
+
+  client:
+    build:
+      context: ./client
+      dockerfile: Dockerfile.dev
+    volumes:
+      - /app/node_modules
+      - ./client:/app
+
+  fibonacci-server:
+    build:
+      context: ./server
+      dockerfile: Dockerfile.dev
+    volumes:
+      - /app/node_modules
+      - ./server:/app
+    environment: 
+      - NODE_ENV=local
+      - SERVER_PORT=5000
+      - SERVER_FIBONACCI_MAX_INDEX=40
+      - CACHE_IMPLEMENTATION=redis
+      - CACHE_HOST=redis
+      - CACHE_PORT=6379
+      - CACHE_HASH=values
+      - PUBLISHER_IMPLEMENTATION=redis
+      - PUBLISHER_HOST=redis
+      - PUBLISHER_PORT=6379
+      - PUBLISHER_TOPIC=insert
+      - STORAGE_IMPLEMENTATION=postgres
+      - STORAGE_HOST=fibonacci-db
+      - STORAGE_PORT=5432
+      - STORAGE_DATABASE=fibonacci
+      - STORAGE_AUTH_USERNAME=postgres
+      - STORAGE_AUTH_PASSWORD=postgres
+    depends_on:
+      - redis
+      - fibonacci-db
+
+  fibonacci-worker:
+    build:
+      context: ./worker
+      dockerfile: Dockerfile.dev
+    volumes:
+      - /app/node_modules
+      - ./worker:/app
+    environment:
+      - NODE_ENV=local
+      - CACHE_IMPLEMENTATION=redis
+      - CACHE_HOST=redis
+      - CACHE_PORT=6379
+      - CACHE_HASH=values
+      - SOURCE_IMPLEMENTATION=redis
+      - SOURCE_HOST=redis
+      - SOURCE_PORT=6379
+      - SOURCE_TOPIC=insert
+    depends_on:
+      - redis
+
+  redis:
+    image: redis:latest
+
+  fibonacci-db:
+    image: postgres:latest
+    ports:
+      - "5430:5432"
+    environment:
+      POSTGRES_PASSWORD: postgres

@@ -1,0 +1,25 @@
+server:
+  fibonacci:
+    maxIndex: SERVER_FIBONACCI_MAX_INDEX
+  port: SERVER_PORT
+
+cache:
+  implementation: CACHE_IMPLEMENTATION
+  host: CACHE_HOST
+  port: CACHE_PORT
+  hash: CACHE_HASH
+
+publisher:
+  implementation: PUBLISHER_IMPLEMENTATION
+  host: PUBLISHER_HOST
+  port: PUBLISHER_PORT
+  topic: PUBLISHER_TOPIC
+
+storage:
+  implementation: STORAGE_IMPLEMENTATION
+  host: STORAGE_HOST
+  port: STORAGE_PORT
+  database: STORAGE_DATABASE
+  credentials:
+    username: STORAGE_AUTH_USERNAME
+    password: STORAGE_AUTH_PASSWORD

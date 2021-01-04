@@ -1,0 +1,11 @@
+cache:
+  implementation: redis
+  host: redis
+  port: 6379
+  hash: values
+
+source:
+  implementation: redis
+  host: redis
+  port: 6379
+  topic: insert

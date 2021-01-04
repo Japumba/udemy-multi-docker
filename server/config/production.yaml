@@ -1,0 +1,25 @@
+server:
+  fibonacci:
+    maxIndex: 40
+  port: 5000
+
+cache:
+  implementation: redis
+  host: redis
+  port: 6379
+  hash: values
+
+publisher:
+  implementation: redis
+  host: redis
+  port: 6379
+  topic: message
+
+storage:
+  implementation: postgres
+  host: redis
+  port: 5432
+  database: fibonacci
+  credentials:
+    username: postgres
+    password: postgres

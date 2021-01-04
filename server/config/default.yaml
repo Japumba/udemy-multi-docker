@@ -1,0 +1,13 @@
+server:
+  fibonacci:
+    maxIndex: 40
+  port: 8080
+
+cache:
+  implementation: fake
+
+publisher:
+  implementation: fake
+
+storage:
+  implementation: fake

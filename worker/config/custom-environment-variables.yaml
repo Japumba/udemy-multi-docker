@@ -1,0 +1,11 @@
+cache:
+  implementation: CACHE_IMPLEMENTATION
+  host: CACHE_HOST
+  port: CACHE_PORT
+  hash: CACHE_HASH
+
+source:
+  implementation: SOURCE_IMPLEMENTATION
+  host: SOURCE_HOST
+  port: SOURCE_PORT
+  topic: SOURCE_TOPIC
